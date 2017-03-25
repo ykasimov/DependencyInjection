@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+
+    <bean id="messageFile" class="java.io.File">
+        <constructor-arg index="0" type="java.lang.String" value="messages.txt"/>
+    </bean>
+
+    <bean id="msgRepo" class="ass.kasimyur.MessageRepositoryImpl.MessageRepository">
+        <constructor-arg ref="messageFile"/>
+    </bean>
+
+    <bean id="presenter" class="ass.kasimyur.Presenter">
+        <constructor-arg ref="msgRepo"/>
+        <property name="view">
+            <list value-type="ass.kasimyur.Interfaces.IView">
+                <ref bean="chatView"/>
+                <ref bean="chatView"/>
+
+            </list>
+        </property>
+    </bean>
+    <bean id="chatView" class="ass.kasimyur.ViewImpl.ChatView" scope="prototype">
+        <constructor-arg ref="presenter"/>
+    </bean>
+
+
+
+</beans>
